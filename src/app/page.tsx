@@ -26,21 +26,17 @@ const Home: React.FC = () => {
 
   return (
     <div className="min-h-screen font-[family-name:var(--font-geist-sans)] flex flex-col">
-      {/* Header */}
       <header className="bg-white shadow-md sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 py-5 sm:px-6">
           <div className="flex justify-between items-center">
-            {/* Logo */}
             <div className="flex items-center space-x-3">
-              <a href="/" className="hover:opacity-80 transition-opacity">
-                <img
-                  src={kampusData.logo}
-                  alt="Logo Kampus"
-                  width={100}
-                  height={50}
-                  loading="lazy"
-                />
-              </a>
+              <img
+                src={kampusData.logo}
+                alt="Logo Kampus"
+                width={100}
+                height={50}
+                loading="lazy"
+              />
               <div className="text-2xl font-semibold text-gray-900 truncate max-w-[200px]">
                 <a
                   href={kampusData.link_universitas}
@@ -109,6 +105,7 @@ const Home: React.FC = () => {
               <NavLink
                 href={kampusData.link_aplikasi}
                 className="hover:text-indigo-600 transition"
+                target="_blank"
               >
                 Aplikasi
               </NavLink>
@@ -140,6 +137,7 @@ const Home: React.FC = () => {
               <NavLink
                 href={kampusData.link_aplikasi}
                 className="hover:text-indigo-400"
+                target="_blank"
               >
                 Aplikasi
               </NavLink>
@@ -148,9 +146,7 @@ const Home: React.FC = () => {
         )}
       </header>
 
-      {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 flex-grow">
-        {/* Forum Mahasiswa Section */}
         <section
           id={link_forum}
           className="transition-all duration-500 ease-in-out transform min-h-screen flex justify-center items-center flex-col mb-16"
@@ -168,9 +164,9 @@ const Home: React.FC = () => {
               link="/pengumuman"
             />
             <Card
-              title="Berita Terkini"
-              description="Berita terkini seputar kegiatan dan perkembangan di kalangan mahasiswa."
-              link="/berita"
+              title="Diskusi Akademik"
+              description="Forum untuk bertanya dan berdiskusi tentang tugas dan materi kuliah."
+              link="/diskusi"
             />
             <Card
               title="Agenda Acara Mendatang"
@@ -180,7 +176,6 @@ const Home: React.FC = () => {
           </div>
         </section>
 
-        {/* Tentang Section */}
         <section
           id="tentang"
           className="transition-all duration-500 ease-in-out transform min-h-screen flex justify-center items-center flex-col mb-16"
@@ -193,7 +188,6 @@ const Home: React.FC = () => {
           </p>
         </section>
 
-        {/* Kontak Section */}
         <section
           id="kontak"
           className="transition-all duration-500 ease-in-out transform min-h-screen flex justify-center items-center flex-col mb-16"
@@ -228,8 +222,7 @@ const Home: React.FC = () => {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-gray-800 text-white py-4">
+      <footer className="bg-gray-800 text-white py-7">
         <div className="max-w-7xl mx-auto text-center">
           <p>
             © {new Date().getFullYear()} {short_forum}. All rights reserved.

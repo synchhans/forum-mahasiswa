@@ -1,10 +1,12 @@
 "use client";
+
 import { FaBars } from "react-icons/fa";
 import NavLink from "../components/NavLink";
+import Card from "../components/Card";
 import useNavigation from "../hooks/useNavigation";
 import { kampusData } from "../../../data/kampusData";
 
-export default function Pengumuman() {
+export default function DiskusiAkademik() {
   const {
     isMobileMenuOpen,
     activeSection,
@@ -19,13 +21,15 @@ export default function Pengumuman() {
         <div className="max-w-7xl mx-auto px-4 py-5 sm:px-6">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-3">
-              <img
-                src={kampusData.logo}
-                alt="Logo Kampus"
-                width={100}
-                height={50}
-                loading="lazy"
-              />
+              <a href="/" className="hover:opacity-80 transition-opacity">
+                <img
+                  src={kampusData.logo}
+                  alt="Logo Kampus"
+                  width={100}
+                  height={50}
+                  loading="lazy"
+                />
+              </a>
               <div className="text-2xl font-semibold text-gray-900 truncate max-w-[200px]">
                 <a
                   href={kampusData.link_universitas}
@@ -53,14 +57,11 @@ export default function Pengumuman() {
               </NavLink>
               <NavLink
                 href="/pengumuman"
-                className="text-indigo-600 transition"
+                className="hover:text-indigo-600 transition"
               >
                 Pengumuman
               </NavLink>
-              <NavLink
-                href="/diskusi"
-                className="hover:text-indigo-600 transition"
-              >
+              <NavLink href="/diskusi" className="text-indigo-600 transition">
                 Diskusi
               </NavLink>
               <NavLink
@@ -73,45 +74,49 @@ export default function Pengumuman() {
             </nav>
           </div>
         </div>
+
+        {isMobileMenuOpen && (
+          <div className="sm:hidden bg-gray-800 text-white p-4 mx-2 mt-2 rounded-lg shadow-lg">
+            <div className="flex flex-col space-y-4">
+              <NavLink href="/" className="hover:text-indigo-400">
+                Home
+              </NavLink>
+              <NavLink href="/pengumuman" className="hover:text-indigo-400">
+                Pengumuman
+              </NavLink>
+              <NavLink href="/diskusi" className="hover:text-indigo-400">
+                Diskusi
+              </NavLink>
+              <NavLink
+                href={kampusData.link_aplikasi}
+                className="hover:text-indigo-400"
+                target="_blank"
+              >
+                Aplikasi
+              </NavLink>
+            </div>
+          </div>
+        )}
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 flex-grow">
-        <section className="py-16 flex flex-col items-center justify-center">
-          <h1 className="text-4xl font-bold text-center text-gray-800 mb-6">
-            Pengumuman Kampus
+        <section className="transition-all duration-500 ease-in-out transform min-h-screen flex justify-center items-center flex-col mb-16">
+          <h1 className="text-4xl font-bold text-center text-gray-800 mb-4">
+            Diskusi Akademik
           </h1>
-          <p className="text-lg text-gray-600 text-center max-w-2xl mb-10">
-            Tetap terupdate dengan pengumuman terbaru tentang kegiatan, acara,
-            dan informasi penting dari kampus.
+          <p className="text-lg text-center text-gray-600 mb-8">
+            Ruang untuk mahasiswa berbagi ide, berdiskusi, dan mencari solusi
+            akademik. Silakan bergabung dalam topik diskusi atau mulai diskusi
+            baru.
           </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {kampusData.pengumuman.map((item, index) => (
-              <div
-                key={index}
-                className="bg-white shadow-md rounded-lg overflow-hidden"
-              >
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full h-48 object-cover"
-                />
-                <div className="p-4">
-                  <h2 className="text-lg font-semibold text-gray-800 mb-2">
-                    {item.title}
-                  </h2>
-                  <p className="text-sm text-gray-600 mb-4">
-                    {item.description}
-                  </p>
-                  <a
-                    href={item.link}
-                    target="_blank"
-                    className="text-indigo-600 hover:underline"
-                  >
-                    Baca selengkapnya →
-                  </a>
-                </div>
-              </div>
+          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            {kampusData.diskusi.map((diskusi) => (
+              <Card
+                key={diskusi.link}
+                title={diskusi.title}
+                description={diskusi.description}
+                link={diskusi.link}
+              />
             ))}
           </div>
         </section>
@@ -120,7 +125,7 @@ export default function Pengumuman() {
       <footer className="bg-gray-800 text-white py-7">
         <div className="max-w-7xl mx-auto text-center">
           <p>
-            © {new Date().getFullYear()} {kampusData.universitas}. All rights
+            © {new Date().getFullYear()} {kampusData.nama_forum}. All rights
             reserved.
           </p>
         </div>

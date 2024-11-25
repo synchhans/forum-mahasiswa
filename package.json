@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^6.5.0",
     "@types/react-icons": "^3.0.0",
     "next": "15.0.3",
     "react": "19.0.0-rc-66855b96-20241106",
