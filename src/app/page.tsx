@@ -165,21 +165,25 @@ const Home: React.FC = () => {
                   changeSection("forum");
                   scrollToSection(link_forum);
                 }}
-                className={`text-lg font-medium transition-colors duration-200 ${
-                  activeSection === "forum" ? "text-indigo-400" : "text-white"
-                }`}
+                className="text-lg font-medium transition-colors duration-200 text-white hover:text-indigo-400"
               >
                 {short_forum}
               </NavLink>
-              <NavLink href="#tentang" className="hover:text-indigo-400">
+              <NavLink
+                href="#tentang"
+                className="text-white hover:text-indigo-400"
+              >
                 Tentang
               </NavLink>
-              <NavLink href="#kontak" className="hover:text-indigo-400">
+              <NavLink
+                href="#kontak"
+                className="text-white hover:text-indigo-400"
+              >
                 Kontak
               </NavLink>
               <NavLink
                 href={generalData!.link_aplikasi}
-                className="hover:text-indigo-400"
+                className="text-white hover:text-indigo-400"
                 target="_blank"
               >
                 Aplikasi

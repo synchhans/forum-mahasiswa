@@ -3,15 +3,49 @@ import { FaBars } from "react-icons/fa";
 import NavLink from "../components/NavLink";
 import useNavigation from "../hooks/useNavigation";
 import { kampusData } from "../../../data/kampusData";
+import useFetchData from "../../../utils/hooks/useFetchData";
+
+interface GeneralData {
+  logo: string;
+  link_universitas: string;
+  universitas: string;
+  link_aplikasi: string;
+}
 
 export default function Pengumuman() {
+  const { isMobileMenuOpen, toggleMenu } = useNavigation();
+
   const {
-    isMobileMenuOpen,
-    activeSection,
-    toggleMenu,
-    changeSection,
-    scrollToSection,
-  } = useNavigation();
+    data: generalData,
+    dataLain,
+    error,
+    loading,
+  } = useFetchData<GeneralData>("pengumuman");
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex justify-center items-center">
+        <div className="border-t-4 border-blue-500 border-solid w-16 h-16 rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex justify-center items-center text-red-500">
+        <div className="text-center space-y-4">
+          <p className="text-xl font-semibold">Oops, something went wrong!</p>
+          <p>Error: {error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="mt-4 px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-500 transition"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen font-[family-name:var(--font-geist-sans)] flex flex-col">
@@ -73,6 +107,35 @@ export default function Pengumuman() {
             </nav>
           </div>
         </div>
+
+        {isMobileMenuOpen && (
+          <div className="sm:hidden bg-gray-800 p-4 mx-2 mt-2 rounded-lg shadow-lg">
+            <div className="flex flex-col space-y-4">
+              <NavLink href="/" className="text-white hover:text-indigo-400">
+                Home
+              </NavLink>
+              <NavLink
+                href="/pengumuman"
+                className="text-indigo-400 hover:text-indigo-500"
+              >
+                Pengumuman
+              </NavLink>
+              <NavLink
+                href="/diskusi"
+                className="text-white hover:text-indigo-400"
+              >
+                Diskusi
+              </NavLink>
+              <NavLink
+                href={generalData!.link_aplikasi}
+                className="text-white hover:text-indigo-400"
+                target="_blank"
+              >
+                Aplikasi
+              </NavLink>
+            </div>
+          </div>
+        )}
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 flex-grow">
@@ -86,7 +149,7 @@ export default function Pengumuman() {
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {kampusData.pengumuman.map((item, index) => (
+            {dataLain?.map((item, index) => (
               <div
                 key={index}
                 className="bg-white shadow-md rounded-lg overflow-hidden"

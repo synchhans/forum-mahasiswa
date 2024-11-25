@@ -1,16 +1,41 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { kampusData } from "../../../../data/kampusData";
+import useFetchData from "../../../../utils/hooks/useFetchData";
 
 export default function DetailDiskusi() {
   const params = useParams();
   const router = useRouter();
   const slug = params?.slug;
 
-  const diskusi = kampusData.diskusi.find(
-    (item) => item.link.split("/").pop() === slug
-  );
+  const { dataLain, error, loading } = useFetchData("diskusi");
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex justify-center items-center">
+        <div className="border-t-4 border-blue-500 border-solid w-16 h-16 rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex justify-center items-center text-red-500">
+        <div className="text-center space-y-4">
+          <p className="text-xl font-semibold">Oops, something went wrong!</p>
+          <p>Error: {error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="mt-4 px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-500 transition"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const diskusi = dataLain?.find((item) => item.link.split("/").pop() === slug);
 
   if (!diskusi) {
     return (

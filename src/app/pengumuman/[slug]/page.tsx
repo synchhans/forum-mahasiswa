@@ -1,18 +1,44 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { kampusData } from "../../../../data/kampusData";
 import { useState } from "react";
+import useFetchData from "../../../../utils/hooks/useFetchData";
 
 export default function DetailPengumuman() {
   const params = useParams();
   const slug = params?.slug;
 
-  const pengumuman = kampusData.pengumuman.find(
+  const { dataLain, error, loading } = useFetchData("pengumuman");
+  const [isImageFull, setIsImageFull] = useState(false);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex justify-center items-center">
+        <div className="border-t-4 border-blue-500 border-solid w-16 h-16 rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex justify-center items-center text-red-500">
+        <div className="text-center space-y-4">
+          <p className="text-xl font-semibold">Oops, something went wrong!</p>
+          <p>Error: {error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="mt-4 px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-500 transition"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const pengumuman = dataLain?.find(
     (item) => item.link.split("/").pop() === slug
   );
-
-  const [isImageFull, setIsImageFull] = useState(false);
 
   if (!pengumuman) {
     return (
@@ -27,7 +53,6 @@ export default function DetailPengumuman() {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center py-12 px-4">
-      {/* Gambar */}
       <div className="relative w-full max-w-4xl">
         <div className="overflow-hidden rounded-lg shadow-lg">
           <img
@@ -38,7 +63,6 @@ export default function DetailPengumuman() {
         </div>
       </div>
 
-      {/* Tombol Lihat Gambar */}
       <button
         onClick={() => setIsImageFull(true)}
         className="mt-4 px-4 py-2 bg-indigo-600 text-white font-semibold rounded-lg shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400"
@@ -46,7 +70,6 @@ export default function DetailPengumuman() {
         Lihat Gambar Sepenuhnya
       </button>
 
-      {/* Konten */}
       <div className="px-6 mt-8 text-center">
         <h1 className="text-3xl font-bold text-gray-800 mb-4">
           {pengumuman.title}
@@ -56,8 +79,9 @@ export default function DetailPengumuman() {
         </p>
       </div>
 
+      {/* Full Image Modal */}
       {isImageFull && (
-        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 transition-opacity duration-300">
           <div className="relative">
             <img
               src={pengumuman.image}
