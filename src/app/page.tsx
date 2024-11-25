@@ -3,17 +3,19 @@ import { FaBars } from "react-icons/fa";
 import NavLink from "./components/NavLink";
 import Card from "./components/Card";
 import useNavigation from "./hooks/useNavigation";
-import { kampusData } from "../../data/kampusData";
+import useFetchData from "../../utils/hooks/useFetchData";
 
-const link_forum = kampusData.nama_forum
-  .toLowerCase()
-  .replace(/\s+/g, "-")
-  .replace(/[^a-z0-9\-]/g, "");
-
-const short_forum =
-  kampusData.nama_forum.split(" ").length > 3
-    ? kampusData.nama_forum.split(" ").slice(0, 3).join(" ") + ".."
-    : kampusData.nama_forum;
+interface GeneralData {
+  nama_forum: string;
+  logo: string;
+  link_universitas: string;
+  universitas: string;
+  konten_forum: string;
+  konten_tentang: string;
+  email: string;
+  wa: string;
+  link_aplikasi: string;
+}
 
 const Home: React.FC = () => {
   const {
@@ -24,6 +26,48 @@ const Home: React.FC = () => {
     scrollToSection,
   } = useNavigation();
 
+  const {
+    data: generalData,
+    error,
+    loading,
+  } = useFetchData<GeneralData>("general");
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex justify-center items-center">
+        <div className="border-t-4 border-blue-500 border-solid w-16 h-16 rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex justify-center items-center text-red-500">
+        <div className="text-center space-y-4">
+          <p className="text-xl font-semibold">Oops, something went wrong!</p>
+          <p>Error: {error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="mt-4 px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-500 transition"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const link_forum =
+    generalData?.nama_forum
+      ?.toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/[^a-z0-9\-]/g, "") || "";
+
+  const short_forum =
+    generalData!.nama_forum.split(" ").length > 3
+      ? generalData?.nama_forum.split(" ").slice(0, 3).join(" ") + ".."
+      : generalData?.nama_forum;
+
   return (
     <div className="min-h-screen font-[family-name:var(--font-geist-sans)] flex flex-col">
       <header className="bg-white shadow-md sticky top-0 z-10">
@@ -31,7 +75,7 @@ const Home: React.FC = () => {
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-3">
               <img
-                src={kampusData.logo}
+                src={generalData?.logo}
                 alt="Logo Kampus"
                 width={100}
                 height={50}
@@ -39,17 +83,16 @@ const Home: React.FC = () => {
               />
               <div className="text-2xl font-semibold text-gray-900 truncate max-w-[200px]">
                 <a
-                  href={kampusData.link_universitas}
+                  href={generalData?.link_universitas}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-indigo-600 transition-colors"
                 >
-                  {kampusData.universitas}
+                  {generalData?.universitas}
                 </a>
               </div>
             </div>
 
-            {/* Navigation */}
             <div className="sm:hidden">
               <button
                 onClick={toggleMenu}
@@ -103,7 +146,7 @@ const Home: React.FC = () => {
                 Kontak
               </NavLink>
               <NavLink
-                href={kampusData.link_aplikasi}
+                href={generalData!.link_aplikasi}
                 className="hover:text-indigo-600 transition"
                 target="_blank"
               >
@@ -135,7 +178,7 @@ const Home: React.FC = () => {
                 Kontak
               </NavLink>
               <NavLink
-                href={kampusData.link_aplikasi}
+                href={generalData!.link_aplikasi}
                 className="hover:text-indigo-400"
                 target="_blank"
               >
@@ -152,10 +195,10 @@ const Home: React.FC = () => {
           className="transition-all duration-500 ease-in-out transform min-h-screen flex justify-center items-center flex-col mb-16"
         >
           <h1 className="text-4xl font-bold text-center text-gray-800 mb-4">
-            {kampusData.nama_forum}
+            {generalData?.nama_forum}
           </h1>
           <p className="text-lg text-center text-gray-600 mb-8">
-            {kampusData.konten_forum}
+            {generalData?.konten_forum}
           </p>
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <Card
@@ -181,10 +224,10 @@ const Home: React.FC = () => {
           className="transition-all duration-500 ease-in-out transform min-h-screen flex justify-center items-center flex-col mb-16"
         >
           <h2 className="text-3xl font-semibold text-center text-gray-800 mb-4">
-            Tentang {kampusData.nama_forum}
+            Tentang {generalData?.nama_forum}
           </h2>
           <p className="text-lg text-center text-gray-600 max-w-2xl mx-auto">
-            {kampusData.konten_tentang}
+            {generalData?.konten_tentang}
           </p>
         </section>
 
@@ -203,19 +246,19 @@ const Home: React.FC = () => {
             <p className="text-sm text-gray-700">
               Email:{" "}
               <a
-                href={`mailto:${kampusData.email}`}
+                href={`mailto:${generalData?.email}`}
                 className="text-indigo-600"
               >
-                {kampusData.email}
+                {generalData?.email}
               </a>
             </p>
             <p className="text-sm text-gray-700 mt-2">
               WhatsApp:{" "}
               <a
-                href={`https://wa.me/+62${kampusData.wa}`}
+                href={`https://wa.me/+62${generalData?.wa}`}
                 className="text-indigo-600"
               >
-                +62 {kampusData.wa}
+                +62 {generalData?.wa}
               </a>
             </p>
           </div>
