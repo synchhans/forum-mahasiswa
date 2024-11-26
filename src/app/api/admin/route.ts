@@ -96,8 +96,8 @@ export async function PATCH(req: NextRequest) {
     }
 
     return NextResponse.json({
+      success: true,
       message: "Data successfully updated!",
-      data: updatedData,
     });
   } catch (error) {
     console.error(error);
