@@ -10,6 +10,9 @@ import {
 import { useEffect, useState } from "react";
 import GeneralForm from "../components/General";
 import Alert from "../components/Alert";
+import PengumumanModal from "../components/PengumumanModal";
+import DiskusiModal from "../components/DiskusiModal";
+import AgendaModal from "../components/AgendaModal";
 
 export default function DevPage() {
   const [isMounted, setIsMounted] = useState(false);
@@ -136,19 +139,19 @@ export default function DevPage() {
                 General
               </button>
               <button
-                onClick={() => openModal(<div>Pengumuman content here...</div>)}
+                onClick={() => openModal(<PengumumanModal />)}
                 className="bg-indigo-600 text-white px-6 py-2 rounded-lg shadow hover:bg-indigo-700 transition duration-200"
               >
                 Pengumuman
               </button>
               <button
-                onClick={() => openModal(<div>Diskusi content here...</div>)}
+                onClick={() => openModal(<DiskusiModal />)}
                 className="bg-indigo-600 text-white px-6 py-2 rounded-lg shadow hover:bg-indigo-700 transition duration-200"
               >
                 Diskusi
               </button>
               <button
-                onClick={() => openModal(<div>Agenda content here...</div>)}
+                onClick={() => openModal(<AgendaModal />)}
                 className="bg-indigo-600 text-white px-6 py-2 rounded-lg shadow hover:bg-indigo-700 transition duration-200"
               >
                 Agenda

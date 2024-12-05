@@ -1,12 +1,38 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { kampusData } from "../../../data/kampusData";
+import useFetchData from "../../../utils/hooks/useFetchData";
 
 export default function AgendaAcara() {
   const router = useRouter();
+  const { dataLain: dataAgenda, error, loading } = useFetchData("agenda");
 
-return (
+  if (loading) {
+    return (
+      <div className="min-h-screen flex justify-center items-center">
+        <div className="border-t-4 border-blue-500 border-solid w-16 h-16 rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex justify-center items-center text-red-500">
+        <div className="text-center space-y-4">
+          <p className="text-xl font-semibold">Oops, something went wrong!</p>
+          <p>Error: {error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="mt-4 px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-500 transition"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
     <div className="min-h-screen bg-gray-50 py-10 px-4 flex flex-col items-center">
       <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
         Agenda Acara Mendatang
@@ -17,7 +43,7 @@ return (
       </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-5xl">
-        {kampusData.agenda.map((acara, index) => (
+        {dataAgenda?.map((acara, index) => (
           <div
             key={index}
             className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow"

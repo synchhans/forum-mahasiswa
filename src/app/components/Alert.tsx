@@ -10,12 +10,10 @@ const Alert = ({
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    // Automatically hide the alert after 5 seconds
     const timer = setTimeout(() => {
       setIsVisible(false);
     }, 5000);
 
-    // Clean up the timer when the component unmounts
     return () => clearTimeout(timer);
   }, []);
 

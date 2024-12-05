@@ -2,10 +2,9 @@
 import { FaBars } from "react-icons/fa";
 import NavLink from "../components/NavLink";
 import useNavigation from "../hooks/useNavigation";
-import { kampusData } from "../../../data/kampusData";
 import useFetchData from "../../../utils/hooks/useFetchData";
 
-interface GeneralData {
+export interface GeneralData {
   logo: string;
   link_universitas: string;
   universitas: string;
@@ -54,7 +53,7 @@ export default function Pengumuman() {
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-3">
               <img
-                src={kampusData.logo}
+                src={generalData?.logo}
                 alt="Logo Kampus"
                 width={100}
                 height={50}
@@ -62,12 +61,12 @@ export default function Pengumuman() {
               />
               <div className="text-2xl font-semibold text-gray-900 truncate max-w-[200px]">
                 <a
-                  href={kampusData.link_universitas}
+                  href={generalData?.link_universitas}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-indigo-600 transition-colors"
                 >
-                  {kampusData.universitas}
+                  {generalData?.universitas}
                 </a>
               </div>
             </div>
@@ -98,7 +97,7 @@ export default function Pengumuman() {
                 Diskusi
               </NavLink>
               <NavLink
-                href={kampusData.link_aplikasi}
+                href={generalData?.link_aplikasi!}
                 className="hover:text-indigo-600 transition"
                 target="_blank"
               >
@@ -183,7 +182,7 @@ export default function Pengumuman() {
       <footer className="bg-gray-800 text-white py-7">
         <div className="max-w-7xl mx-auto text-center">
           <p>
-            © {new Date().getFullYear()} {kampusData.universitas}. All rights
+            © {new Date().getFullYear()} {generalData?.universitas}. All rights
             reserved.
           </p>
         </div>
