@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 const Alert = ({
   message,
   type,
+  details,
 }: {
   message: string;
   type: "success" | "error";
+  details?: string;
 }) => {
   const [isVisible, setIsVisible] = useState(true);
 
@@ -26,6 +28,7 @@ const Alert = ({
       }`}
     >
       <p className="text-center">{message}</p>
+      {details && <p>{details}</p>}
     </div>
   );
 };

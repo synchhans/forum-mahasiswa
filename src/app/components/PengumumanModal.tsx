@@ -22,6 +22,7 @@ export default function PengumumanModal() {
   const [modalType, setModalType] = useState<"add" | "edit" | null>(null);
   const [currentData, setCurrentData] = useState<Pengumuman | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
 
   const openModal = (type: "add" | "edit", data?: Pengumuman) => {
     setModalType(type);
@@ -58,6 +59,8 @@ export default function PengumumanModal() {
       : `/api/admin?data=pengumuman`;
     const method = data._id ? "PATCH" : "POST";
 
+    setSaving(true);
+
     try {
       const response = await fetch(url, {
         method,
@@ -76,6 +79,8 @@ export default function PengumumanModal() {
       closeModal();
     } catch (error) {
       console.error("Error:", error);
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -107,7 +112,7 @@ export default function PengumumanModal() {
 
   if (error) {
     return (
-      <div className="min-h-screen flex justify-center items-center text-red-500">
+      <div className="flex justify-center items-center text-red-500">
         <div className="text-center space-y-4">
           <p className="text-xl font-semibold">Oops, something went wrong!</p>
           <p>Error: {error}</p>
@@ -123,52 +128,52 @@ export default function PengumumanModal() {
   }
 
   return (
-    <div className="max-h-screen">
+    <div className="min-h-screen">
       <h2 className="text-xl font-semibold mb-4 text-gray-800">
         Kontrol Pengumuman
       </h2>
-      <div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex-grow">
-          <section className="py-16 flex flex-col items-center justify-center">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {dataPengumuman?.map((item: Pengumuman) => (
-                <div
-                  key={item?._id}
-                  className="bg-white shadow-md rounded-lg overflow-hidden transform transition-all duration-300 ease-in-out scale-100 hover:scale-105"
-                >
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-4">
-                    <h2 className="text-lg font-semibold text-gray-800 mb-2">
-                      {item.title}
-                    </h2>
-                    <p className="text-sm text-gray-600 mb-4 truncate">
-                      {item.description}
-                    </p>
-                    <div className="flex justify-between">
-                      <button
-                        onClick={() => openModal("edit", item)}
-                        className="text-sm bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => openDeleteConfirm(item._id!)}
-                        className="text-sm bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700"
-                      >
-                        Hapus
-                      </button>
-                    </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex-grow">
+        <section className="py-16 flex flex-col items-center justify-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {dataPengumuman?.map((item: Pengumuman) => (
+              <div
+                key={item?._id}
+                className="bg-white shadow-md rounded-lg overflow-hidden transform transition-all duration-300 ease-in-out scale-100 hover:scale-105"
+              >
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full h-48 object-cover"
+                />
+                <div className="p-4">
+                  <h2 className="text-lg font-semibold text-gray-800 mb-2">
+                    {item.title}
+                  </h2>
+                  <p className="text-sm text-gray-600 mb-4 truncate">
+                    {item.description}
+                  </p>
+                  <div className="flex justify-between">
+                    <button
+                      onClick={() => openModal("edit", item)}
+                      className="text-sm bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => openDeleteConfirm(item._id!)}
+                      className="text-sm bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700"
+                    >
+                      Hapus
+                    </button>
                   </div>
                 </div>
-              ))}
-            </div>
-          </section>
-        </div>
+              </div>
+            ))}
+          </div>
+        </section>
       </div>
+
       <div className="absolute bottom-6 right-6">
         <button
           onClick={() => openModal("add")}
@@ -274,8 +279,13 @@ export default function PengumumanModal() {
                 <button
                   type="submit"
                   className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+                  disabled={saving}
                 >
-                  {modalType === "add" ? "Tambah" : "Simpan"}
+                  {saving
+                    ? "Menyimpan..."
+                    : modalType === "add"
+                    ? "Tambah"
+                    : "Simpan"}
                 </button>
                 <button
                   type="button"

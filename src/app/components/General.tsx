@@ -117,7 +117,7 @@ const GeneralForm = ({ onSave }: { onSave: (data: GeneralData) => void }) => {
 
   if (error) {
     return (
-      <div className="min-h-screen flex justify-center items-center text-red-500">
+      <div className="flex justify-center items-center text-red-500">
         <div className="text-center space-y-4">
           <p className="text-xl font-semibold">Oops, something went wrong!</p>
           <p>Error: {error}</p>

@@ -119,7 +119,7 @@ export default function DiskusiModal() {
 
   if (error) {
     return (
-      <div className="min-h-screen flex justify-center items-center text-red-500">
+      <div className="flex justify-center items-center text-red-500">
         <div className="text-center space-y-4">
           <p className="text-xl font-semibold">Oops, something went wrong!</p>
           <p>Error: {error}</p>
@@ -135,7 +135,7 @@ export default function DiskusiModal() {
   }
 
   return (
-    <div className="max-h-screen">
+    <div className="min-h-screen">
       <h2 className="text-xl font-semibold mb-4 text-gray-800">
         Kontrol Diskusi
       </h2>
