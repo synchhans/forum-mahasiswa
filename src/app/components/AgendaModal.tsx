@@ -46,9 +46,10 @@ export default function AgendaModal() {
   };
 
   const handleSave = async (data: IAgenda) => {
-    const url = data._id
-      ? `/api/admin?data=agenda&id=${data._id}`
-      : `/api/admin?data=agenda`;
+    const url =
+      "agenda/" + data._id
+        ? `/api/admin?data=agenda&id=${data._id}`
+        : `/api/admin?data=agenda`;
     const method = data._id ? "PATCH" : "POST";
 
     try {

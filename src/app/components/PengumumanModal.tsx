@@ -48,10 +48,12 @@ export default function PengumumanModal() {
 
   const handleSave = async (data: Pengumuman) => {
     if (!data.link) {
-      data.link = data.title
-        .toLowerCase()
-        .replace(/\s+/g, "_")
-        .replace(/[^\w\s]/gi, "");
+      data.link =
+        "pengumuman/" +
+        data.title
+          .toLowerCase()
+          .replace(/\s+/g, "-")
+          .replace(/[^\w\s]/gi, "");
     }
 
     const url = data._id
