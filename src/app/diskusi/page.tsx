@@ -59,7 +59,7 @@ export default function DiskusiAkademik() {
                 <img
                   src={generalData?.logo}
                   alt="Logo Kampus"
-                  width={100}
+                  width={50}
                   height={50}
                   loading="lazy"
                 />

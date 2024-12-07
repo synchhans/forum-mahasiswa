@@ -79,7 +79,6 @@ const Home: React.FC = () => {
                 alt="Logo Kampus"
                 width={50}
                 height={50}
-                loading="lazy"
               />
               <div className="text-2xl font-semibold text-gray-900 truncate max-w-[200px]">
                 <a

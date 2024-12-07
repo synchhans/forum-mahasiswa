@@ -17,16 +17,25 @@ const useFetchData = <T>(endpoint: string): FetchDataResponse<T> => {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
+      const responseDataGeneral = await fetch(`/api/data?data=general`);
       const response = await fetch(`/api/data?data=${endpoint}`);
+
+      if (!responseDataGeneral.ok) {
+        throw new Error(
+          `Error fetching ${endpoint}: ${responseDataGeneral.statusText}`
+        );
+      }
       if (!response.ok) {
         throw new Error(`Error fetching ${endpoint}: ${response.statusText}`);
       }
 
-      const result = await response.json();
+      const resultDataGeneral = await responseDataGeneral.json();
+
       if (endpoint === "general") {
-        setData(result?.data?.[0] ?? null);
+        setData(resultDataGeneral?.data?.[0] ?? null);
       } else {
-        setData(result?.data?.[0] ?? null);
+        const result = await response.json();
+        setData(resultDataGeneral?.data?.[0] ?? null);
         setDataLain(result?.data ?? null);
       }
     } catch (err: any) {
