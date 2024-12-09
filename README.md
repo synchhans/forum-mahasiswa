@@ -43,7 +43,7 @@ Sebelum memulai, pastikan Anda sudah menginstal:
 1. **Clone repo ini**:
 
    ```bash
-   git clone https://github.com/synchhans/forum-mahasiswa.git
+   git clone https://github.com/username/forum-mahasiswa.git
    cd forum-mahasiswa
    ```
 
@@ -105,7 +105,7 @@ Berikut adalah struktur direktori utama proyek:
 ## Tutorial
 
 Ikuti langkah-langkah detail untuk mengonfigurasi aplikasi ini, mulai dari pengaturan lingkungan, hingga deployment di Vercel dengan mengakses tutorial YouTube berikut:
-[🔗 Tutorial YouTube](https://youtube.com/codeworshipper)
+[🔗 Tutorial YouTube](https://youtu.be/wqsY3gVGo_4)
 
 ---
 
@@ -120,12 +120,6 @@ Jika Anda ingin berkontribusi pada proyek ini, ikuti langkah-langkah berikut:
 1. Fork repositori ini.
 2. Buat cabang baru untuk fitur/bug fix Anda.
 3. Kirim pull request dengan deskripsi perubahan Anda.
-
----
-
-## Lisensi
-
-Proyek ini dilisensikan di bawah [MIT License](LICENSE).
 
 ---
 
